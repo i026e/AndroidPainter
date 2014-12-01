@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Paint</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="size_dialog_message">Select brush size</string>
+    <string name="size_dialog_title">Select brush size</string>
+    <string name="problem_save_message">The problem was encountered while saving </string>
+    <string name="ok_save_message">File was saved successfully: </string>
+    <string name="problem_load_message">The problem was encountered while loading </string>
+    <string name="menu_reset">Reset Image</string>
+    <string name="menu_load">Load Image</string>
+    <string name="menu_save">Save Image</string>
+    <string name="menu_fill">Fill with Color</string>
+    <string name="menu_size">Brush Size</string>
+    <string name="menu_color">Brush Color</string>
+</resources>

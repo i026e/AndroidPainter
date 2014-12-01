@@ -43,7 +43,6 @@ public class Painter extends Activity implements View.OnTouchListener {
     private float mX, mY;
 
 
-
     /**
      * Called when the activity is first created.
      */
@@ -61,8 +60,6 @@ public class Painter extends Activity implements View.OnTouchListener {
         View layout = findViewById(R.id.linearLayout);
         int width = getResources().getDisplayMetrics().widthPixels;
         int height = getResources().getDisplayMetrics().heightPixels - getStatusBarHeight();
-
-
 
         Log.d(TAG, "Height:" + height + ", width:" + width);
 

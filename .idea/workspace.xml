@@ -41,32 +41,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
+            <state vertical-scroll-proportion="0.36945814" vertical-offset="0" max-vertical-offset="406">
               <caret line="10" column="79" selection-start-line="10" selection-start-column="79" selection-end-line="10" selection-end-column="79" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Painter.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Painter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/coursera/Paint/Painter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.5419846" vertical-offset="405" max-vertical-offset="4215">
-              <caret line="153" column="42" selection-start-line="153" selection-start-column="42" selection-end-line="153" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2877" max-vertical-offset="4170">
+              <caret line="42" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="283" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#getStatusBarHeight#0;class#Painter#0" expanded="false" />
                 <element signature="method#onCreateOptionsMenu#0;class#Painter#0" expanded="false" />
-                <element signature="e#7720#7731#0" expanded="true" />
-                <element signature="e#7733#7961#0" expanded="true" />
-                <element signature="e#7960#7961#0" expanded="true" />
-                <element signature="e#7998#8013#0" expanded="true" />
-                <element signature="e#8015#8218#0" expanded="true" />
-                <element signature="e#8217#8218#0" expanded="true" />
-                <element signature="e#8286#8312#0" expanded="true" />
+                <element signature="e#7717#7728#0" expanded="true" />
+                <element signature="e#7730#7958#0" expanded="true" />
+                <element signature="e#7957#7958#0" expanded="true" />
+                <element signature="e#7995#8010#0" expanded="true" />
+                <element signature="e#8012#8215#0" expanded="true" />
+                <element signature="e#8214#8215#0" expanded="true" />
+                <element signature="e#8283#8309#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -138,11 +138,11 @@
         <option value="$PROJECT_DIR$/src/yuku/ambilwarna/widget/AmbilWarnaPreference.java" />
         <option value="$PROJECT_DIR$/src/org/coursera/Paint/SizeDialog.java" />
         <option value="$PROJECT_DIR$/res/layout/main.xml" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/res/menu/main.xml" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/org/coursera/Paint/FileOperations.java" />
         <option value="$PROJECT_DIR$/src/org/coursera/Paint/Painter.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -507,7 +507,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="6" y="25" width="1360" height="745" extended-state="0" />
+    <frame x="6" y="25" width="1360" height="745" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -583,14 +583,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
-          <caret line="10" column="79" selection-start-line="10" selection-start-column="79" selection-end-line="10" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/menu/main.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.6" vertical-offset="225" max-vertical-offset="675">
@@ -640,20 +632,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/coursera/Paint/Painter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.5419846" vertical-offset="405" max-vertical-offset="4215">
-          <caret line="153" column="42" selection-start-line="153" selection-start-column="42" selection-end-line="153" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2877" max-vertical-offset="4170">
+          <caret line="42" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="283" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#getStatusBarHeight#0;class#Painter#0" expanded="false" />
             <element signature="method#onCreateOptionsMenu#0;class#Painter#0" expanded="false" />
-            <element signature="e#7720#7731#0" expanded="true" />
-            <element signature="e#7733#7961#0" expanded="true" />
-            <element signature="e#7960#7961#0" expanded="true" />
-            <element signature="e#7998#8013#0" expanded="true" />
-            <element signature="e#8015#8218#0" expanded="true" />
-            <element signature="e#8217#8218#0" expanded="true" />
-            <element signature="e#8286#8312#0" expanded="true" />
+            <element signature="e#7717#7728#0" expanded="true" />
+            <element signature="e#7730#7958#0" expanded="true" />
+            <element signature="e#7957#7958#0" expanded="true" />
+            <element signature="e#7995#8010#0" expanded="true" />
+            <element signature="e#8012#8215#0" expanded="true" />
+            <element signature="e#8214#8215#0" expanded="true" />
+            <element signature="e#8283#8309#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36945814" vertical-offset="0" max-vertical-offset="406">
+          <caret line="10" column="79" selection-start-line="10" selection-start-column="79" selection-end-line="10" selection-end-column="79" />
+          <folding />
         </state>
       </provider>
     </entry>

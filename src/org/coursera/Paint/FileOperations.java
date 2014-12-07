@@ -1,9 +1,7 @@
 package org.coursera.Paint;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -27,6 +25,23 @@ import java.util.Date;
 public class FileOperations {
     private static final String TAG = FileOperations.class.getSimpleName();
     private static final float ROTATE_ANGLE = 90;
+
+
+    public static PairWH<Integer> getScreenSize(Context context){
+        int displayW = context.getResources().getDisplayMetrics().widthPixels;
+        int displayH = context.getResources().getDisplayMetrics().heightPixels - getStatusBarHeight(context);
+        return new PairWH<Integer>(displayW, displayH);
+    }
+
+    //return height of status bar. It is where battery charge is shown
+    public static int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
 
 
     public static void saveImage(Context context, Bitmap bitmap){
@@ -110,28 +125,26 @@ public class FileOperations {
             int h = options.outHeight;
             Log.d(TAG, "Bitmap raw size:" + w + " x " + h);
 
-            int displayW = context.getResources().getDisplayMetrics().widthPixels;
-            int displayH = context.getResources().getDisplayMetrics().heightPixels;
-
+            PairWH<Integer> displaySize = getScreenSize(context);
 
 
             // check if need to rotate screen
-            if ((h > w && displayH < displayW) || (h < w && displayH > displayW)) {
+            if ((h > w && displaySize.h < displaySize.w) || (h < w && displaySize.h > displaySize.w)) {
                 // rotate screen
                 changeScreenOrientation(context);
-                //switch height and with
-                int temp = displayW;
-                displayW = displayH;
-                displayH = temp;
+                //switch height and width
+                displaySize = new PairWH<Integer>(displaySize.h, displaySize.w);
             }
 
 
+            // the decoder uses a final value based on powers of 2,
+            // any other value will be rounded down to the nearest power of 2.
+            int sample = Math.max(1, Math.max(w / displaySize.w, h / displaySize.h));
 
-            int sample = 1;
-
-            while (w > displayW * sample || h > displayH * sample) {
-                sample = sample * 2;
-            }
+            //sample = 1;
+            //while (w > displayW * sample || h > displayH * sample) {
+                //sample = sample * 2;
+            //}
             Log.d(TAG, "Sampling at " + sample);
 
             options.inJustDecodeBounds = false;

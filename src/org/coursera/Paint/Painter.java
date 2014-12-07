@@ -27,21 +27,22 @@ public class Painter extends Activity implements View.OnTouchListener {
     private static final int DEF_PAINT_SIZE = 10;
     private static final int MAX_PAINT_SIZE = 64;
     private static final int REQUEST_CODE = 12345;
-
-    // this enum will store objects that color possible to change
-    private static enum coloredObj {BACKGROUND, BRUSH};
-
     private SharedPreferences mPrefs;
 
+    ;
     private Bitmap mBitmap;
     private Canvas mCanvas;
     private ImageView mImageView;
-
+    private float mScaleX, mScaleY;
     private Paint mPaint;
     private int mBackColor;
     // These variables will store previous touch point coordinates
     private float mX, mY;
 
+    // this enum will store objects that color possible to change
+    private static enum coloredObj {
+        BACKGROUND, BRUSH
+    }
 
     /**
      * Called when the activity is first created.
@@ -56,49 +57,35 @@ public class Painter extends Activity implements View.OnTouchListener {
         //force screen orientation
         FileOperations.forceScreenOrientation(this);
 
-        // Get size of the screen
-        View layout = findViewById(R.id.linearLayout);
-        int width = getResources().getDisplayMetrics().widthPixels;
-        int height = getResources().getDisplayMetrics().heightPixels - getStatusBarHeight();
-
-        Log.d(TAG, "Height:" + height + ", width:" + width);
-
-        // create bitmap & canvas
-        mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        mCanvas = new Canvas(mBitmap);
-        mCanvas.drawColor(DEF_BACK_COLOR);
-
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL);
-
 
         // From top left to bottom right
         mPrefs = getPreferences(MODE_PRIVATE);
         loadPreferences();
 
-
         mImageView.setOnTouchListener(this);
-
-        //
-    }
-    //return height of status bar. It is where battery charge is shown
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
     }
 
     //These two methods change background
-    private void setBackground(int color){
+    private void setBackground(int color) {
+        // Get size of the screen
+        PairWH<Integer> displaySize = FileOperations.getScreenSize(this);
+
+        Log.d(TAG, "Height:" + displaySize.h + ", width:" + displaySize.w);
+
+        // create bitmap & canvas
+        mBitmap = Bitmap.createBitmap(displaySize.w, displaySize.h, Bitmap.Config.ARGB_8888);
+        mCanvas = new Canvas(mBitmap);
         mBackColor = color;
+
         mCanvas.drawColor(mBackColor);
         // Update image
         mImageView.setImageBitmap(mBitmap);
+
     }
-    private void setBackground(Bitmap bitmap){
+
+    private void setBackground(Bitmap bitmap) {
         mBitmap.recycle();
         mCanvas = null;
 
@@ -108,19 +95,32 @@ public class Painter extends Activity implements View.OnTouchListener {
         mCanvas.drawBitmap(bitmap, 0, 0, null);
 
         bitmap.recycle();
-
         // Update image
         mImageView.setImageBitmap(mBitmap);
 
+
+    }
+
+    private void setScale() {
+        Log.d(TAG, "ImageView Width:" + mImageView.getWidth() + " Height:" + mImageView.getHeight());
+        Log.d(TAG, "Bitmap Width:" + mBitmap.getWidth() + " Height:" + mBitmap.getHeight());
+
+        mScaleX = ((float) mBitmap.getWidth()) / mImageView.getWidth();
+        mScaleY = ((float) mBitmap.getHeight()) / mImageView.getHeight();
+
+        //mCanvas.scale(1f/mScaleX,1f/mScaleY);
+
+        Log.d(TAG, "ScaleX:" + mScaleX + " ScaleY:" + mScaleY);
     }
 
     // These two methods deal with user preferences
-    private void loadPreferences(){
+    private void loadPreferences() {
         setBackground(mPrefs.getInt(KEY_BACK_COLOR, DEF_BACK_COLOR));
         mPaint.setColor(mPrefs.getInt(KEY_PAINT_COLOR, DEF_PAINT_COLOR));
         mPaint.setStrokeWidth(mPrefs.getInt(KEY_PAINT_SIZE, DEF_PAINT_SIZE));
     }
-    private void savePreferences(){
+
+    private void savePreferences() {
         SharedPreferences.Editor editor = mPrefs.edit();
         editor.putInt(KEY_BACK_COLOR, mBackColor);
         editor.putInt(KEY_PAINT_COLOR, mPaint.getColor());
@@ -128,7 +128,7 @@ public class Painter extends Activity implements View.OnTouchListener {
         editor.commit();
     }
 
-    private void openImageGallery(){
+    private void openImageGallery() {
         // Do some Intent magic to open the Gallery? Yes!
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -137,18 +137,22 @@ public class Painter extends Activity implements View.OnTouchListener {
     }
 
     @Override
-    public void onPause(){
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        //after reloading set new scale
+        setScale();
+    }
+
+    @Override
+    public void onPause() {
         savePreferences();
         super.onPause();
     }
+
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        //motionEvent.
-        float x = motionEvent.getX() * motionEvent.getXPrecision();
-        float y = motionEvent.getY() * motionEvent.getYPrecision();
-        // also possible to use these lines
-        //float x = motionEvent.getRawX();
-        //float y = motionEvent.getRawY();
+        float x = motionEvent.getX() * mScaleX;
+        float y = motionEvent.getY() * mScaleY;
 
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN: // press
@@ -162,7 +166,7 @@ public class Painter extends Activity implements View.OnTouchListener {
             case MotionEvent.ACTION_UP: // release
             case MotionEvent.ACTION_CANCEL:
                 Log.d(TAG, "End x:" + x + ", y:" + y);
-                break;
+                return true;
         }
 
         // Save positions
@@ -170,7 +174,7 @@ public class Painter extends Activity implements View.OnTouchListener {
         mY = y;
 
         //Draw a circle @ the end to nicer look
-        mCanvas.drawCircle(x, y, mPaint.getStrokeWidth()/2, mPaint);
+        mCanvas.drawCircle(x, y, mPaint.getStrokeWidth() / 2, mPaint);
         // Update image
         mImageView.setImageBitmap(mBitmap);
         return true;
@@ -183,18 +187,18 @@ public class Painter extends Activity implements View.OnTouchListener {
         return true;
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // when new backround returned
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             Bitmap bm = FileOperations.loadImage(this, data);
-            if (bm != null){
+            if (bm != null) {
                 setBackground(bm);
             }
         }
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -224,7 +228,7 @@ public class Painter extends Activity implements View.OnTouchListener {
     }
 
     // Show size picking dialog
-    private void pickSize(int initialSize){
+    private void pickSize(int initialSize) {
         final SeekBar sB = new SeekBar(this);
         sB.setMax(MAX_PAINT_SIZE);
         sB.setProgress(initialSize);
@@ -254,14 +258,14 @@ public class Painter extends Activity implements View.OnTouchListener {
     }
 
     //Show color picking dialog
-    private void pickColor(int initialColor, final coloredObj cObj){
+    private void pickColor(int initialColor, final coloredObj cObj) {
         // initialColor is the initially-selected color to be shown in the rectangle on the left of the arrow.
         // for example, 0xff000000 is black, 0xff0000ff is blue. Please be aware of the initial 0xff which is the alpha.
         AmbilWarnaDialog dialog = new AmbilWarnaDialog(this, initialColor, true, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 // color is the color selected by the user.
-                switch (cObj){
+                switch (cObj) {
                     case BACKGROUND:
                         setBackground(color);
                         break;
@@ -280,5 +284,7 @@ public class Painter extends Activity implements View.OnTouchListener {
 
         dialog.show();
     }
+
+
 
 }
